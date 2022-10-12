@@ -1,0 +1,15 @@
+diff --git a/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f b/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
+index 6cd831665..f2d9a9072 100644
+--- a/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
++++ b/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
+@@ -78,8 +78,8 @@ c$$$      elseif (Vdecmod.eq.0) then
+ c$$$         vdecaymode=0
+ c$$$      elseif (Vdecmod.eq.10) then
+ c$$$         vdecaymode=10
+-c$$$      elseif (Vdecmod.eq.11) then
+-c$$$         vdecaymode=11
++      elseif (Vdecmod.eq.11) then
++         vdecaymode=11
+ c$$$      elseif (Vdecmod.eq.12) then
+ c$$$         vdecaymode=12
+       else
