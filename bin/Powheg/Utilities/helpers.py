@@ -434,3 +434,11 @@ gawk \"/sroot/{gsub(/8000/,$COMENERGY)};/hmass/{gsub(/125.5/, ${HMASS})};/mur,mu
 gawk \"/sroot/{gsub(/8000/,$COMENERGY)};/hmass/{gsub(/125.5/, ${HMASS})};/mur,muf/{gsub(/62.750/, $(( $HMASS/4 )))};{print}\" POWHEG-BOX/HJ/PaperRun/HNNLO-LHC8-R04-APX2-11.input | sed -e \"s#10103#SEED#g\" | sed -e \"s#HNNLO-LHC8-R04-APX2-11#HNNLO-LHC13-R04-APX2-0505#g\"> HNNLO-LHC13-R04-APX2-0505.input\n \
 cp ${WORKDIR}/Utilities/nnlopsreweighter.input .",
     }.get(process,"")
+
+
+def runGetSource_patch_9(process) :
+  return {
+    "HZJ_EW" : 
+     "cd POWHEG-BOX/HZJ_ew\n \
+     patch -l -p0 -i ${patches_dir}/HZJ_ew_LEPTON.patch",
+    }.get(process,"")
