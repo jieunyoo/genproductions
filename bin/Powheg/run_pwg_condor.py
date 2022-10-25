@@ -293,6 +293,7 @@ def runGetSource(parstage, xgrid, folderName, powInputName, process, noPdfCheck,
         "patch_6" : helpers.runGetSource_patch_6(process),
         "patch_7" : helpers.runGetSource_patch_7(process),
         "patch_8" : helpers.runGetSource_patch_8(process),
+        "patch_9" : helpers.runGetSource_patch_9(process),
     }
 
     fourFlavorProcesses = ["ST_tch_4f", "bbH", "Wbb_dec", "Wbbj", "WWJ"]
