@@ -1,15 +1,208 @@
-diff --git a/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f b/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
-index 6cd831665..f2d9a9072 100644
---- a/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
-+++ b/bin/Powheg/boosted/POWHEG-BOX/HZJ_ew/init_couplings.f
+diff --git a/Born.f b/Born.f
+index 28f3e2a..565ed78 100644
+--- a/Born.f
++++ b/Born.f
+@@ -60,14 +60,14 @@ c$$$c     11  : lepton decay: multiply by nleptfam (e,mu, or e,mu,tau)
+ c$$$c     12  : neutrino decay: multiply by 3 (ve, vmu, vtau)
+ c$$$c     Factor (1 + alphas(mz)/pi) to take into account the corrections to
+ c$$$c     the Z decay products
+-c$$$      if (vdecaymode.eq.0 .or. vdecaymode.eq.10 
+-c$$$     $     .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
+-c$$$         if (decflav.eq.11) then
+-c$$$c     leptons 
+-c$$$            multiplicity = nleptfam
+-c$$$         elseif(decflav.eq.12) then
+-c$$$c     neutrinos
+-c$$$            multiplicity = 3
++          if (vdecaymode.eq.0 .or. vdecaymode.eq.10 
++               .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
++             if (decflav.eq.11) then
++          leptons 
++                multiplicity = nleptfam
++             elseif(decflav.eq.12) then
++          neutrinos
++                multiplicity = 3
+ c$$$         elseif(decflav.eq.1002) then
+ c$$$c     up-type quarks
+ c$$$            multiplicity = 2*opasopi*nc
+@@ -78,7 +78,7 @@ c$$$         else
+ c$$$            write(*,*) 'Wrong case in Born.f'
+ c$$$            call pwhg_exit(-1)
+ c$$$         endif
+-c$$$      endif
++          endif
+ *********************************************************      
+ ***   MODIFICATION OF Higgs-Z couplings:
+ ***   (we assume multiplicative kappa factors)
+@@ -216,9 +216,9 @@ c     vector boson id and decay
+       call lhefinitemasses
+ 
+ c$$$c     fix here the Z decay mode: for the moment, only Z -> l+ l- decay
+-c$$$      if(vdecaymode.eq.0.or.vdecaymode.eq.10  
+-c$$$     $     .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
+-c$$$         rand_num=random()
++          if(vdecaymode.eq.0.or.vdecaymode.eq.10  
++               .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
++             rand_num=random()
+ c$$$         if(idup(5).eq.-1001) then
+ c$$$c        down-type quark
+ c$$$            if(rand_num.le.1d0/3d0) then
+@@ -241,38 +241,39 @@ c$$$               idup(5) = -4
+ c$$$               idup(6) =  4                  
+ c$$$            endif
+ c$$$         elseif (idup(5).eq.-11) then
+-c$$$c        lepton
+-c$$$            if(rand_num.le.1d0/nleptfam) then
+-c$$$               idup(5) = -11
+-c$$$               idup(6) =  11
+-c$$$            elseif(rand_num.gt.1d0/nleptfam.and.
+-c$$$     $              rand_num.le.2d0/nleptfam) then
+-c$$$               idup(5) = -13
+-c$$$               idup(6) =  13
+-c$$$            else
+-c$$$               idup(5) = -15
+-c$$$               idup(6) =  15
+-c$$$            endif         
+-c$$$         elseif (idup(5).eq.-12) then
+-c$$$c        neutrino
+-c$$$            if(rand_num.le.1d0/3d0) then
+-c$$$               idup(5) = -12
+-c$$$               idup(6) =  12
+-c$$$            elseif(rand_num.gt.1d0/3d0.and.rand_num.le.2d0/3d0) then
+-c$$$               idup(5) = -14
+-c$$$               idup(6) =  14
+-c$$$            else
+-c$$$               idup(5) = -16
+-c$$$               idup(6) =  16
+-c$$$            endif         
+-c$$$         else
+-c$$$            write(*,*) 'Error in finalize_lh'
+-c$$$            call pwhg_exit(-1)
+-c$$$         endif
+-c$$$      else
+-c$$$         idup(5) =  vdecaymode
+-c$$$         idup(6) = -vdecaymode
+-c$$$      endif
++             if (idup(5).eq.-11) then
++             lepton
++                if(rand_num.le.1d0/nleptfam) then
++                   idup(5) = -11
++                   idup(6) =  11
++                elseif(rand_num.gt.1d0/nleptfam.and.
++                        rand_num.le.2d0/nleptfam) then
++                   idup(5) = -13
++                   idup(6) =  13
++                else
++                   idup(5) = -15
++                   idup(6) =  15
++                endif         
++             elseif (idup(5).eq.-12) then
++             neutrino
++                if(rand_num.le.1d0/3d0) then
++                   idup(5) = -12
++                   idup(6) =  12
++                elseif(rand_num.gt.1d0/3d0.and.rand_num.le.2d0/3d0) then
++                   idup(5) = -14
++                   idup(6) =  14
++                else
++                   idup(5) = -16
++                   idup(6) =  16
++                endif         
++             else
++                write(*,*) 'Error in finalize_lh'
++                call pwhg_exit(-1)
++             endif
++          else
++             idup(5) =  vdecaymode
++             idup(6) = -vdecaymode
++          endif
+       end
+ 
+ 
+diff --git a/init_couplings.f b/init_couplings.f
+index 6cd8316..a89f56e 100644
+--- a/init_couplings.f
++++ b/init_couplings.f
 @@ -78,8 +78,8 @@ c$$$      elseif (Vdecmod.eq.0) then
  c$$$         vdecaymode=0
  c$$$      elseif (Vdecmod.eq.10) then
  c$$$         vdecaymode=10
 -c$$$      elseif (Vdecmod.eq.11) then
 -c$$$         vdecaymode=11
-+      elseif (Vdecmod.eq.11) then
-+         vdecaymode=11
++          elseif (Vdecmod.eq.11) then
++             vdecaymode=11
  c$$$      elseif (Vdecmod.eq.12) then
  c$$$         vdecaymode=12
        else
+diff --git a/real.f b/real.f
+index df37684..37a2212 100644
+--- a/real.f
++++ b/real.f
+@@ -63,14 +63,14 @@ c$$$c     11  : lepton decay: multiply by nleptfam (e,mu or e,mu,tau)
+ c$$$c     12  : neutrino decay: multiply by 3 (ve, vmu, vtau)
+ c$$$c     Factor (1 + alphas(mz)/pi) to take into account the corrections to
+ c$$$c     the Z decay products     
+-c$$$      if (vdecaymode.eq.0 .or. vdecaymode.eq.10
+-c$$$     $     .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
+-c$$$         if (decflav.eq.11) then
+-c$$$c     leptons 
+-c$$$            multiplicity = nleptfam
+-c$$$         elseif(decflav.eq.12) then
+-c$$$c     neutrinos
+-c$$$            multiplicity = 3
++          if (vdecaymode.eq.0 .or. vdecaymode.eq.10
++               .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
++             if (decflav.eq.11) then
++          leptons 
++                multiplicity = nleptfam
++             elseif(decflav.eq.12) then
++          neutrinos
++                multiplicity = 3
+ c$$$         elseif(decflav.eq.1002) then
+ c$$$c     up-type quarks
+ c$$$            multiplicity = 2*opasopi*nc
+@@ -81,7 +81,7 @@ c$$$         else
+ c$$$            write(*,*) 'Wrong case in real.f'
+ c$$$            call pwhg_exit(-1)
+ c$$$         endif
+-c$$$      endif
++          endif
+ *********************************************************      
+ ***   MODIFICATION OF Higgs-Z couplings:
+ ***   (we assume multiplicative kappa factors)
+diff --git a/virtual.f b/virtual.f
+index bf37cca..78f91e8 100644
+--- a/virtual.f
++++ b/virtual.f
+@@ -182,14 +182,14 @@ c     Factor (1 + alphas(mz)/pi) to take into account the decay corrections
+       multiplicity=1d0
+ 
+ c&&&c     For the moment, only Z -> l+ l- decay
+-c$$$      if (vdecaymode.eq.0 .or. vdecaymode.eq.10
+-c$$$     $     .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
+-c$$$         if (decflav.eq.11) then
+-c$$$c     leptons 
+-c$$$            multiplicity = nleptfam
+-c$$$         elseif(decflav.eq.12) then
+-c$$$c     neutrinos
+-c$$$            multiplicity = 3
++          if (vdecaymode.eq.0 .or. vdecaymode.eq.10
++               .or. vdecaymode.eq.11 .or. vdecaymode.eq.12) then
++             if (decflav.eq.11) then
++          leptons 
++                multiplicity = nleptfam
++             elseif(decflav.eq.12) then
++          neutrinos
++                multiplicity = 3
+ c$$$         elseif(decflav.eq.1002) then
+ c$$$c     up-type quarks
+ c$$$            multiplicity = 2*opasopi*nc
+@@ -200,7 +200,7 @@ c$$$         else
+ c$$$            write(*,*) 'Wrong case in virtual.f'
+ c$$$            call pwhg_exit(-1)
+ c$$$         endif
+-c$$$      endif
++          endif
+ 
+ c     finite renormalization from as_DR to as_MSbar (arXiv:1102.5353v2,
+ c     formula (26)) and shift from DR to CDR (arXiv:1002.2581v1,
